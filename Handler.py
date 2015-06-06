@@ -17,3 +17,7 @@ class Handler(webapp2.RequestHandler):
 
 	def render(self,template,*a,**kw):
 		self.write(self.get_template(template,*a,**kw))
+
+	def render_template(self,template,title="",username="",message=""):
+		self.render(template,title=title,username=username,
+					message=message)

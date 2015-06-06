@@ -17,10 +17,13 @@
 
 import webapp2
 from WikiHandler import *
-from AddHandler import *
-from LoginHandler import *
-from SignUpHandler import *
+from AddEditHandler import *
+from Login import *
+from SignUp import *
 
 app = webapp2.WSGIApplication([
-    ('/',WikiHandler)
+    ('/',WikiHandler),
+    ('/addedit',AddEditHandler),
+    ('/login',LoginHandler),
+    ('/signup',SignUpHandler)
 ], debug=True)
