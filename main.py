@@ -21,9 +21,15 @@ from AddEditHandler import *
 from Login import *
 from SignUp import *
 
+class LogoutHandler(webapp2.RequestHandler):
+	def get(self):
+		self.response.headers.add_header('Set-Cookie','userid = ; Path=/')
+		self.redirect('/')
+		
 app = webapp2.WSGIApplication([
     ('/',WikiHandler),
     ('/addedit',AddEditHandler),
     ('/login',LoginHandler),
-    ('/signup',SignUpHandler)
+    ('/signup',SignUpHandler),
+    ('/logout',LogoutHandler)
 ], debug=True)

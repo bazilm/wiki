@@ -11,4 +11,4 @@ class Articles(db.Model):
 	title = db.StringProperty(required=True)
 	content = db.TextProperty(required=True)
 	created = db.DateTimeProperty(auto_now_add=True)
-	user_id = db.IntProperty(required=True)
+	user_id = db.IntegerProperty(required=True)
