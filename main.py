@@ -14,12 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import webapp2
 
-class MainHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Hello world!')
+import webapp2
+from WikiHandler import *
+from AddHandler import *
+from LoginHandler import *
+from SignUpHandler import *
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/',WikiHandler)
 ], debug=True)
