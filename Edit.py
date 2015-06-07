@@ -36,4 +36,8 @@ class EditHandler(Handler):
 			article.put()
 			self.redirect('/')
 
+		else:
+			self.render('addedit.html',title=self.title,post_title=post_title,
+						post_content=post_content,message=message)
+
 
