@@ -9,4 +9,25 @@
 
 <h1>{{title}}</h1>
 
+<form method="post">
+	<label>Title
+		<div>
+			<input type="text" name="title" value="{{post_title}}">
+		</div>
+	</label>
+
+	<label>Content
+		<div>
+			<textarea name="content">{{post_content}}</textarea>  	
+		</div>
+	</label>
+
+	<div>
+		<input type="submit">
+	</div>
+
+</form>
+{{message}}
+
+
 {% endblock %}

@@ -20,6 +20,8 @@ from WikiHandler import *
 from AddEditHandler import *
 from Login import *
 from SignUp import *
+from ArticleHandler import *
+from Edit import *
 
 class LogoutHandler(webapp2.RequestHandler):
 	def get(self):
@@ -31,5 +33,7 @@ app = webapp2.WSGIApplication([
     ('/addedit',AddEditHandler),
     ('/login',LoginHandler),
     ('/signup',SignUpHandler),
-    ('/logout',LogoutHandler)
+    ('/logout',LogoutHandler),
+    ('/(\d+)',ArticleHandler),
+    ('/(\d+)/edit',EditHandler)
 ], debug=True)

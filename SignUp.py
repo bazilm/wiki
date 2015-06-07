@@ -9,6 +9,7 @@ from validate import *
 from Models import *
 from queries import *
 
+
 class SignUpHandler(Handler):
 
 	title = "SignUp"
@@ -35,9 +36,16 @@ class SignUpHandler(Handler):
 									 message="Username Taken")
 
 			else:
-				user = Users(username=username,password_hash=password,email=email)
+				if email:
+					user = Users(username=username,password_hash=password,email=email)
+				else:
+					user = Users(username=username,password_hash=password)
+				
+
+
 				user.put()
-				self.response.headers.add_header('Set-Cookie','userid = %s; Path=/' %str(username))
+				userid = setUserId(str(user.key().id()))
+				self.response.headers.add_header('Set-Cookie','userid = %s; Path=/' %userid)
 				self.redirect('/')
 
 

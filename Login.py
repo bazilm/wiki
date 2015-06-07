@@ -18,7 +18,11 @@ class LoginHandler(Handler):
 		userid = self.request.cookies.get("userid")
 
 		if userid:
-			self.redirect('/')
+			if checkUserId(str(userid)):
+				self.redirect('/')
+			else:
+				self.render_template("login.html",title=self.title)
+
 		else:
 			self.render_template("login.html",title=self.title)
 
@@ -31,23 +35,22 @@ class LoginHandler(Handler):
 			self.render_template("login.html",title = self.title,message=message,
 								 username=username)
 		else:
-			if not self.check_in_users(username,password):
+			userid = self.check_in_users(username,password)
+			if not userid :
 				self.render_template("login.html",title=self.title,message="Username not registered")
 			
 			else:
-				self.response.headers.add_header('Set-Cookie','userid = %s; Path=/' %str(username))
+				userid= setUserId(str(userid))
+				self.response.headers.add_header('Set-Cookie','userid = %s; Path=/' %userid)
 				self.redirect('/')
 
 	
 	def check_in_users(self,username,password):
 		users = getUsers(username,password)
 
-		logging.info('logging')
-
-		for user in users:
-			logging.info(user.username+" "+user.password_hash)
 		
 		if users.count():
-			return True
+			for user in users:
+				return user.key().id()
 		else:
 			return False

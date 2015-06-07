@@ -6,8 +6,19 @@
 
 {% block body %}
 
-<pre><a href="/addedit">{{add}}</a>   <a href="/{{status}}">{{status}}</a> </pre>
+<pre><a href="/addedit?q=add">{{add}}</a>   <a href="/{{status}}">{{status}}</a> </pre>
 
 <h1>{{title}}</h1>
+<hr>
+{% for article in articles %}
+	<div>
+	<a href="/{{article.key().id()}}">
+		<h3>{{article.title}}</h3>
+			{{article.content|safe}}
+	</a>
+	</div>
+	<hr>
+{% endfor %}
+
 
 {% endblock %}

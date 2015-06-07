@@ -1,10 +1,11 @@
 import re
-
+import hashlib
+SECRET = "qwenmwerczcv1267"
 
 username_regex = '([a-zA-Z0-9-_]{3,16}$)'
 password_regex = '([a-zA-Z0-9-_]{6,20}$)'
 email_regex = '(.{1,16})@(.{3,10}).com'
-message = None
+message = False
 
 def validate(username,password,verify=None,email=None):
 	username_match=re.match(username_regex,username)
@@ -33,3 +34,38 @@ def validate(username,password,verify=None,email=None):
 		message = "Invalid Username"
 
 	return message
+
+def validate_post(title,content):
+
+	if title and content:
+		return True
+	else:
+		if title:
+			return "Content required"
+
+		elif content:
+			return "Title required"
+
+		else:
+			return "Title and Content required"
+
+def setUserId(username):
+	userid = username+'|'+hashlib.sha256(SECRET+username).hexdigest()
+	return userid
+
+def checkUserId(userid):
+	userid = userid.split('|')
+
+	if len(userid)<=1:
+		return False
+
+	username=userid[0]
+	username_hash=userid[1]
+
+
+	if hashlib.sha256(SECRET+username).hexdigest()==username_hash:
+		return True
+	else:
+		return False
+
+
