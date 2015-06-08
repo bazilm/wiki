@@ -1,0 +1,19 @@
+.login-body{
+	background-color: #006064;
+}
+
+a{
+color: #555;
+
+}
+
+a:hover{
+	color: #111;
+	text-decoration:none;
+}
+
+a:visited{
+	color: #000;
+	text-decoration:none;
+}
+

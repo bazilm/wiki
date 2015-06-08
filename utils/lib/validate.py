@@ -72,11 +72,6 @@ def getPasswordHash(password):
 	return hashlib.sha256(SECRET+password).hexdigest()
 
 
-def updateCache(articleid,title,content):
-	articles=memcache.get('articles')
-	for article in articles:
-		if article.key().id()==int(articleid):
-			article.title=title
-			article.content=content
+
 
 
