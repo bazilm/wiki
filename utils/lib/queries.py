@@ -20,12 +20,12 @@ def getUsers(username="",password=""):
 
 	return user
 
-def getArticles(userid=None,title=""):
-	if userid and title:
+def getArticles(articleid=None,title=""):
+	if articleid and title:
 		pass
 
-	elif userid:
-		articles= Articles.get_by_id(userid)
+	elif articleid:
+		articles= Articles.get_by_id(articleid)
 
 	elif title:
 		pass
@@ -36,10 +36,20 @@ def getArticles(userid=None,title=""):
 		
 		if not articles:
 			articles = db.GqlQuery("SELECT * from Articles ORDER BY created DESC")
-			
+			memcache.set('articles',list(articles))
 	return articles
 
 def putArticle(article):
 	articles=memcache.get('articles')
 	articles.insert(0,article)
 	memcache.set('articles',articles)
+
+def updateCache(articleid,title,content):
+	articles=memcache.get('articles')
+	for article in articles:
+		if article.key().id()==int(articleid):
+			article.title=title
+			article.content=content
+			break
+	memcache.set('articles',articles)
+

@@ -10,9 +10,15 @@ from queries import *
 
 class ArticleHandler(Handler):
 
+	title = ''
 	def get(self,article_id):
+
+		userid = self.request.cookies.get('userid')
+		if checkUserId(str(userid)):
+			self.title='Edit'
+		
 		
 		article = getArticles(int(article_id))
-		self.render('article.html',post_title=article.title,
+		self.render('article.html',post_title=article.title,title=self.title,
 					post_content=article.content,post_id=article.key().id())
 

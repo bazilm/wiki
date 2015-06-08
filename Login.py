@@ -35,9 +35,10 @@ class LoginHandler(Handler):
 			self.render_template("login.html",title = self.title,message=message,
 								 username=username)
 		else:
+			password=getPasswordHash(password)
 			userid = self.check_in_users(username,password)
 			if not userid :
-				self.render_template("login.html",title=self.title,message="Username not registered")
+				self.render_template("login.html",title=self.title,message="Invalid Login")
 			
 			else:
 				userid= setUserId(str(userid))

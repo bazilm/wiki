@@ -15,10 +15,15 @@ class EditHandler(Handler):
 	title = "Edit"
 
 	def get(self,article_id):
-		article = getArticles(int(article_id))
 
-		self.render('addedit.html',title=self.title,post_title=article.title,
-					post_content=article.content)
+		userid = self.request.cookies.get('userid')
+		if checkUserId(str(userid)):
+			article = getArticles(int(article_id))
+
+			self.render('addedit.html',title=self.title,post_title=article.title,
+						post_content=article.content)
+		else:
+			self.redirect('/')
 
 
 	def post(self,article_id):
@@ -34,6 +39,7 @@ class EditHandler(Handler):
 			article.title=post_title
 			article.content=post_content
 			article.put()
+			updateCache(article_id,post_title,post_content)
 			self.redirect('/')
 
 		else:

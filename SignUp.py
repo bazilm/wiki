@@ -36,6 +36,7 @@ class SignUpHandler(Handler):
 									 message="Username Taken")
 
 			else:
+				password=getPasswordHash(password)
 				if email:
 					user = Users(username=username,password_hash=password,email=email)
 				else:

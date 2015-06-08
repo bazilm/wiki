@@ -8,17 +8,17 @@ email_regex = '(.{1,16})@(.{3,10}).com'
 message = False
 
 def validate(username,password,verify=None,email=None):
-	username_match=re.match(username_regex,username)
+	username_match=re.match(username_regex,str(username))
 	global message
 	
 	if username_match:
-		password_match = re.match(password_regex,password)
+		password_match = re.match(password_regex,str(password))
 
 		if password_match:
 			if verify:
 				if password==verify:
 					if email:
-						email_match = re.match(email_regex,email)
+						email_match = re.match(email_regex,str(email))
 
 						if  email_match:
 							pass
@@ -67,5 +67,16 @@ def checkUserId(userid):
 		return True
 	else:
 		return False
+
+def getPasswordHash(password):
+	return hashlib.sha256(SECRET+password).hexdigest()
+
+
+def updateCache(articleid,title,content):
+	articles=memcache.get('articles')
+	for article in articles:
+		if article.key().id()==int(articleid):
+			article.title=title
+			article.content=content
 
 
