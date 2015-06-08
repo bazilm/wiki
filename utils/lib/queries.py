@@ -1,4 +1,5 @@
 from google.appengine.ext import db
+from google.appengine.api import memcache
 import sys
 import os
 
@@ -9,27 +10,36 @@ from Models import *
 def getUsers(username="",password=""):
 	if username:
 		if password:
-			query = db.GqlQuery("SELECT * from Users where username = :1 AND password_hash= :2",username,password)
+			user = db.GqlQuery("SELECT * from Users where username = :1 AND password_hash= :2",username,password)
 
 		else:
-			query = db.GqlQuery("SELECT * from Users where username = :1",username)
+			user = db.GqlQuery("SELECT * from Users where username = :1",username)
 
 	else:
-		query = db.GqlQuery("SELECT * from Users")
+		user = db.GqlQuery("SELECT * from Users")
 
-	return query
+	return user
 
 def getArticles(userid=None,title=""):
 	if userid and title:
 		pass
 
 	elif userid:
-		return Articles.get_by_id(userid)
+		articles= Articles.get_by_id(userid)
 
 	elif title:
 		pass
 
 	else:
-		query = db.GqlQuery("SELECT * from Articles ORDER BY created DESC")
 
-	return query
+		articles=memcache.get('articles')
+		
+		if not articles:
+			articles = db.GqlQuery("SELECT * from Articles ORDER BY created DESC")
+			
+	return articles
+
+def putArticle(article):
+	articles=memcache.get('articles')
+	articles.insert(0,article)
+	memcache.set('articles',articles)
