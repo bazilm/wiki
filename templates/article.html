@@ -6,9 +6,19 @@
 
 {% block body %}
 
-<h1>{{post_title}}</h1>
-<a href ="/{{post_id}}/edit">{{title}}</a>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<h1 class="text-center">{{post_title}}</h1>
+	</div>
+	<div class="col-md-2 text-right">
+		<a href ="/{{post_id}}/edit">{{title}}</a>
+	</div>
+</div>
 <hr>
-{{post_content|safe}}
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		{{post_content|safe}}
+	</div>
+</div>
 
 {% endblock %}
