@@ -16,7 +16,11 @@ class AddEditHandler(Handler):
 	title = "Add Page"
 
 	def get(self):
-		self.render("addedit.html",title=self.title)
+		userid = self.request.cookies.get('userid')
+		if checkUserId(str(userid)):
+			self.render('addedit.html',title=self.title)
+		else:
+			self.redirect('/')
 
 
 	def post(self):
@@ -31,8 +35,9 @@ class AddEditHandler(Handler):
 			if checkUserId(str(userid)):
 					post_content=post_content.replace('\n','<br>')
 					userid = int(userid.split('|')[0])
+					username=getUsers(userid=userid).username
 					article = Articles(title=post_title,content=post_content,
-										user_id=userid)
+										user_id=userid,username=username)
 					article.put()
 					putArticle(article)
 					self.redirect('/')

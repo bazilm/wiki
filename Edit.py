@@ -28,22 +28,26 @@ class EditHandler(Handler):
 
 	def post(self,article_id):
 
+		userid = self.request.cookies.get('userid')
 		post_title = self.request.get('title')
 		post_content = self.request.get('content')
 
 		message = validate_post(post_title,post_content)
 
-		if message==True:
-			article = getArticles(int(article_id))
+		if checkUserId(str(userid)):
+			if message==True:
+				article = getArticles(int(article_id))
+				userid = int(userid.split('|')[0])
+				username= getUsers(userid=userid)
+				article.title=post_title
+				article.content=post_content
+				article.username=username.username
+				article.put()
+				updateCache(article_id,post_title,post_content)
+				self.redirect('/')
 
-			article.title=post_title
-			article.content=post_content
-			article.put()
-			updateCache(article_id,post_title,post_content)
-			self.redirect('/')
-
-		else:
-			self.render('addedit.html',title=self.title,post_title=post_title,
-						post_content=post_content,message=message)
+			else:
+				self.render('addedit.html',title=self.title,post_title=post_title,
+							post_content=post_content,message=message)
 
 

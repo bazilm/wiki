@@ -7,7 +7,10 @@ sys.path.insert(0,os.path.join(os.path.dirname(__file__),os.pardir,'models'))
 
 from Models import *
 
-def getUsers(username="",password=""):
+def getUsers(username="",password="" ,userid=None):
+	if userid:
+		return Users.get_by_id(userid)
+
 	if username:
 		if password:
 			user = db.GqlQuery("SELECT * from Users where username = :1 AND password_hash= :2",username,password)

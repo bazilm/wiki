@@ -25,15 +25,26 @@
 <div class="row ">
 		
 	<div class="col-md-6 col-md-offset-3 main ">
-	<a class="posts" href="/{{article.key().id()}}">
-		<h3>{{article.title}}</h3>
-			{{article.content[:200]|safe}}
-	</a>
-	<hr>
+		<a class="posts" href="/{{article.key().id()}}">
+			<div class="row">
+				<h3>{{article.title}}</h3>
+			</div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-9">
+					<h4 class="text-right"><small>{{article.username}}</small></h4>
+				</div>
+				
+			</div>
+			<div class="row">
+				{{article.content[:200]|safe}}
+			</div>
+		</a>
+		<hr>
 	</div>
 	
 </div>
-</div>
+	
+
 {% endfor %}
 
 

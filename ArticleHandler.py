@@ -20,5 +20,7 @@ class ArticleHandler(Handler):
 		
 		article = getArticles(int(article_id))
 		self.render('article.html',post_title=article.title,title=self.title,
-					post_content=article.content,post_id=article.key().id())
+					post_content=article.content,post_id=article.key().id(),
+					post_username=article.username,post_created=str(article.created.date()),
+					post_modified=str(article.last_modified.date()))
 
