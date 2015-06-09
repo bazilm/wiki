@@ -39,12 +39,16 @@ class EditHandler(Handler):
 				article = getArticles(int(article_id))
 				userid = int(userid.split('|')[0])
 				username= getUsers(userid=userid)
-				article.title=post_title
-				article.content=post_content
-				article.username=username.username
-				article.put()
-				updateCache(article_id,post_title,post_content)
-				self.redirect('/')
+				if not article.title==post_title or not article.content==post_content:
+					article.title=post_title
+					article.content=post_content
+					article.username=username.username
+					article.put()
+					updateCache(article_id,post_title,post_content)
+					self.redirect('/')
+
+				else:
+					self.redirect('/')
 
 			else:
 				self.render('addedit.html',title=self.title,post_title=post_title,
