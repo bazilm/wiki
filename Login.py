@@ -30,7 +30,7 @@ class LoginHandler(Handler):
 		username = self.request.get("username")
 		password = self.request.get("password")
 		message = validate(username=username,password=password)
-		
+		logging.info(message)
 		if message:
 			self.render_template("login.html",title = self.title,message=message,
 								 username=username)

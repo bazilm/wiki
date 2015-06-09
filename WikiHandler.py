@@ -13,8 +13,8 @@ class WikiHandler(Handler):
 
 	template='wiki.html'
 	title = 'Welcome to Wiki'
-	status = "login"
-	add = ""
+	add = "Signup"
+	login="login"
 
 
 	def get(self):
@@ -24,9 +24,9 @@ class WikiHandler(Handler):
 		
 		if checkUserId(str(userid)):
 			self.add = 'Add'
-			self.status='logout'
+			self.login='logout'
 			self.render(self.template,title=self.title,
-						add=self.add,status=self.status,articles=articles)
+						add=self.add,status=self.login,articles=articles)
 		else:
 			self.render(self.template,title=self.title,
-						add=self.add,status=self.status,articles=articles)
+						add=self.add,status=self.login,articles=articles)

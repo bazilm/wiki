@@ -38,7 +38,7 @@ def getArticles(articleid=None,title=""):
 		articles=memcache.get('articles')
 		
 		if not articles:
-			articles = db.GqlQuery("SELECT * from Articles ORDER BY created DESC")
+			articles = db.GqlQuery("SELECT * from Articles ORDER BY last_modified DESC")
 			memcache.set('articles',list(articles))
 	return articles
 
@@ -51,8 +51,11 @@ def updateCache(articleid,title,content):
 	articles=memcache.get('articles')
 	for article in articles:
 		if article.key().id()==int(articleid):
+			article_index=articles.index(article)
+			article=articles.pop(article_index)
 			article.title=title
 			article.content=content
+			articles.insert(0,article)
 			break
 	memcache.set('articles',articles)
 

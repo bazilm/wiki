@@ -8,7 +8,11 @@
 
 <div class="row">
 	<div class="col-md-1 col-md-offset-10">
-		<a href="/addedit?q=add">{{add}}</a> 
+		{% if add=="Add" %}
+		<a href="/addedit">{{add}}</a> 
+		{% else %}
+		<a href="/signup">{{add}}</a>
+		{%endif%}
 	</div>
 	<div class="col-md-1 ">
 	    <a href="/{{status}}">{{status}}</a> 
@@ -18,8 +22,13 @@
 <div class="row">
 <div class="col-md-6 col-md-offset-3 main">
 <h1 class="text-center">{{title}}</h1>
-<hr>
 </div>
+<div class="row">
+<div class="col-md-6 col-md-offset-3">
+<h4 class="text-center"> An User generated Open Information Hub</h4>
+</div>
+</div>
+<hr>
 
 {% for article in articles %}
 <div class="row ">

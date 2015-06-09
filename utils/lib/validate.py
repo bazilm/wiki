@@ -5,11 +5,12 @@ SECRET = "qwenmwerczcv1267"
 username_regex = '([a-zA-Z0-9-_]{3,16}$)'
 password_regex = '([a-zA-Z0-9-_]{6,20}$)'
 email_regex = '(.{1,16})@(.{3,10}).com'
-message = False
+
 
 def validate(username,password,verify=None,email=None):
+	message = False
 	username_match=re.match(username_regex,str(username))
-	global message
+	
 	
 	if username_match:
 		password_match = re.match(password_regex,str(password))
